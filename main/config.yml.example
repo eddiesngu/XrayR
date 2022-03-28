@@ -1,23 +1,23 @@
 Log:
-  Level: warning # Log level: none, error, warning, info, debug 
+  Level: none # Log level: none, error, warning, info, debug 
   AccessPath: # /etc/XrayR/access.Log
   ErrorPath: # /etc/XrayR/error.log
-DnsConfigPath: # /etc/XrayR/dns.json # Path to dns config, check https://xtls.github.io/config/dns.html for help
-RouteConfigPath: # /etc/XrayR/route.json # Path to route config, check https://xtls.github.io/config/routing.html for help
+DnsConfigPath: # /etc/XrayR/dns.json # Path to dns config, check https://xtls.github.io/config/base/dns/ for help
 InboundConfigPath: # /etc/XrayR/custom_inbound.json # Path to custom inbound config, check https://xtls.github.io/config/inbound.html for help
-OutboundConfigPath: # /etc/XrayR/custom_outbound.json # Path to custom outbound config, check https://xtls.github.io/config/outbound.html for help
+RouteConfigPath: # /etc/XrayR/route.json # Path to route config, check https://xtls.github.io/config/base/route/ for help
+OutboundConfigPath: # /etc/XrayR/custom_outbound.json # Path to custom outbound config, check https://xtls.github.io/config/base/outbound/ for help
 ConnetionConfig:
-  Handshake: 4 # Handshake time limit, Second
-  ConnIdle: 30 # Connection idle time limit, Second
-  UplinkOnly: 2 # Time limit when the connection downstream is closed, Second
-  DownlinkOnly: 4 # Time limit when the connection is closed after the uplink is closed, Second
-  BufferSize: 64 # The internal cache size of each connection, kB 
+  Handshake: 2 # Handshake time limit, Second
+  ConnIdle: 100 # Connection idle time limit, Second
+  UplinkOnly: 0 # Time limit when the connection downstream is closed, Second
+  DownlinkOnly: 0 # Time limit when the connection is closed after the uplink is closed, Second
+  BufferSize: 12 # The internal cache size of each connection, kB 
 Nodes:
   -
-    PanelType: "SSpanel" # Panel type: SSpanel, V2board, PMpanel, , Proxypanel
+    PanelType: "V2board" # Panel type: SSpanel, V2board, PMpanel, , Proxypanel
     ApiConfig:
-      ApiHost: "http://127.0.0.1:667"
-      ApiKey: "123"
+      ApiHost: "https://2lands.me"
+      ApiKey: "haaaaaaaaaanguuuuuuuuuuuu"
       NodeID: 41
       NodeType: V2ray # Node type: V2ray, Shadowsocks, Trojan, Shadowsocks-Plugin
       Timeout: 30 # Timeout for the api request
@@ -27,6 +27,10 @@ Nodes:
       DeviceLimit: 0 # Local settings will replace remote settings, 0 means disable
       RuleListPath: # /etc/XrayR/rulelist Path to local rulelist file
     ControllerConfig:
+      DisableUploadTraffic: false # Disable Upload Traffic to the panel
+      DisableGetRule: false # Disable Get Rule from the panel
+      DisableIVCheck: false # Disable the anti-reply protection for Shadowsocks
+      DisableSniffing: true # Disable domain sniffing 
       ListenIP: 0.0.0.0 # IP address you want to listen
       SendIP: 0.0.0.0 # IP address you want to send pacakage
       UpdatePeriodic: 60 # Time to update the nodeinfo, how many sec.
@@ -37,9 +41,8 @@ Nodes:
       FallBackConfigs:  # Support multiple fallbacks
         -
           SNI: # TLS SNI(Server Name Indication), Empty for any
-          Alpn: # Alpn, Empty for any
           Path: # HTTP PATH, Empty for any
-          Dest: 80 # Required, Destination of fallback, check https://xtls.github.io/config/features/fallback.html for details.
+          Dest: 80 # Required, Destination of fallback, check https://xtls.github.io/config/fallback/ for details.
           ProxyProtocolVer: 0 # Send PROXY protocol version, 0 for dsable
       CertConfig:
         CertMode: dns # Option about how to get certificate: none, file, http, dns. Choose "none" will forcedly disable the tls config.
@@ -77,4 +80,3 @@ Nodes:
   #       DNSEnv: # DNS ENV option used by DNS provider
   #         ALICLOUD_ACCESS_KEY: aaa
   #         ALICLOUD_SECRET_KEY: bbb
-
